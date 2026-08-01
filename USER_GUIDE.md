@@ -11,6 +11,7 @@ Welcome to the **CrossInk** firmware. This guide outlines the hardware controls,
     - [First Launch](#first-launch)
   - [3. Screens](#3-screens)
     - [3.1 Home Screen](#31-home-screen)
+    - [3.1.1 Apps](#311-apps)
     - [3.2 Reading Mode](#32-reading-mode)
     - [3.3 Browse Files Screen](#33-browse-files-screen)
     - [3.4 Recent Books Screen](#34-recent-books-screen)
@@ -91,7 +92,11 @@ Upon turning the device on for the first time, you will be placed on the **[Home
 
 ### 3.1 Home Screen
 
-The Home screen is the main entry point to the firmware. From here you can navigate to **[Reading Mode](#4-reading-mode)** with the most recently read book, the **[Browse Files](#33-browse-files-screen)** screen, the **[Recent Books](#34-recent-books-screen)** screen, the **[File Transfer](#35-file-transfer-screen)** screen, or **[Settings](#36-settings)**.
+The Home screen is the main entry point to the firmware. From here you can navigate to **[Reading Mode](#4-reading-mode)** with the most recently read book, the **[Browse Files](#33-browse-files-screen)** screen, the **[Recent Books](#34-recent-books-screen)** screen, **[Apps](#311-apps)**, the **[File Transfer](#35-file-transfer-screen)** screen, or **[Settings](#36-settings)**.
+
+### 3.1.1 Apps
+
+The Apps launcher contains Weather, Sudoku, Chess, Dice & 8-Ball, and Flip Clock. See the [Apps guide](./docs/apps.md) for controls, connectivity behavior, and device-specific clock notes.
 
 ### 3.2 Reading Mode
 

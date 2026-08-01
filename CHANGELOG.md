@@ -3,6 +3,8 @@
 ### Added
 
 - Updates to support Xteink device detection so the correct display panel driver is used.
+- An Apps launcher with Weather, Sudoku, Chess, Dice, D20, Arrow, and Magic 8-Ball.
+- An orientation-aware flip clock that displays hours and minutes in 12- or 24-hour format.
 
 ## [v1.4.0] - 2026-07-10
 

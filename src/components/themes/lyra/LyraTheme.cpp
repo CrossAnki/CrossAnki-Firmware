@@ -19,7 +19,10 @@
 #include "components/icons/book.h"
 #include "components/icons/book24.h"
 #include "components/icons/chart.h"
+#include "components/icons/chess.h"
+#include "components/icons/clock.h"
 #include "components/icons/cover.h"
+#include "components/icons/dice.h"
 #include "components/icons/file24.h"
 #include "components/icons/folder.h"
 #include "components/icons/folder24.h"
@@ -28,8 +31,10 @@
 #include "components/icons/library.h"
 #include "components/icons/recent.h"
 #include "components/icons/settings2.h"
+#include "components/icons/sudoku.h"
 #include "components/icons/text24.h"
 #include "components/icons/transfer.h"
+#include "components/icons/weather.h"
 #include "components/icons/wifi.h"
 #include "fontIds.h"
 
@@ -105,6 +110,16 @@ const uint8_t* LyraTheme::iconForName(UIIcon icon, uint32_t size) {
         return WifiIcon;
       case UIIcon::Hotspot:
         return HotspotIcon;
+      case UIIcon::Weather:
+        return WeatherIcon;
+      case UIIcon::Sudoku:
+        return SudokuIcon;
+      case UIIcon::Chess:
+        return ChessIcon;
+      case UIIcon::Dice:
+        return DiceIcon;
+      case UIIcon::Clock:
+        return ClockIcon;
       default:
         return nullptr;
     }

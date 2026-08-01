@@ -2,11 +2,13 @@
 
 #include <FontCacheManager.h>
 #include <HalPowerManager.h>
+#include <Memory.h>
 
 #include <algorithm>
 
 #include "CrossPointState.h"
 #include "OpdsServerStore.h"
+#include "apps/AppsActivity.h"
 #include "boot_sleep/BootActivity.h"
 #include "boot_sleep/SleepActivity.h"
 #include "browser/OpdsBookBrowserActivity.h"
@@ -223,6 +225,15 @@ void ActivityManager::goToRecentBooks() {
   }
 }
 
+void ActivityManager::goToApps() {
+  auto apps = makeUniqueNoThrow<AppsActivity>(renderer, mappedInput);
+  if (!apps) {
+    LOG_ERR("ACT", "Unable to allocate AppsActivity");
+    return;
+  }
+  replaceActivity(std::move(apps));
+}
+
 void ActivityManager::goToBrowser() {
   const auto& servers = OPDS_STORE.getServers();
   // Skip the server picker when there's only one server configured
@@ -257,6 +268,8 @@ void ActivityManager::goHome(HomeMenuItem initialMenuItem) {
       initialMenuItem = HomeMenuItem::FILE_BROWSER;
     } else if (activityName == "RecentBooks") {
       initialMenuItem = HomeMenuItem::RECENTS;
+    } else if (activityName == "Apps") {
+      initialMenuItem = HomeMenuItem::APPS_MENU;
     } else if (activityName == "OpdsBookBrowser") {
       initialMenuItem = HomeMenuItem::OPDS_BROWSER;
     } else if (activityName == "CrossPointWebServer") {

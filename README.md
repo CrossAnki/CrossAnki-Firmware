@@ -47,6 +47,7 @@ My goal with this fork was to maintain the core Crosspoint firmware while integr
 - Reading [progress sync](./docs/nearby-position-sync.md) between two CrossInk devices.
 - Added customizable Auto Page Turn Interval (anything between 5-120 seconds).
 - Added ability to view Recent Books as a 3x3 grid view.
+- Added an [Apps launcher](./docs/apps.md) with Weather, Sudoku, local two-player Chess, Dice & 8-Ball, and an orientation-aware Flip Clock.
 - To view a more detailed list for each version, visit the [releases](https://github.com/uxjulia/CrossInk/releases) page to read release notes.
 
 ---
@@ -120,6 +121,7 @@ See [Installation](./docs/installation.md) for step-by-step flashing and revert 
 - [Installation](./docs/installation.md)
 - [Font Build Variants](./docs/font-build-variants.md)
 - [Reader Features](./docs/reader-features.md)
+- [Apps](./docs/apps.md)
 - [Controls](./docs/controls.md)
 - [Simulator](./docs/simulator.md)
 - [Data Cache](./docs/data-cache.md)

@@ -14,6 +14,11 @@
 #include "CrossPointSettings.h"
 #include "MappedInputManager.h"
 #include "activities/ActivityManager.h"
+#include "activities/apps/ChessActivity.h"
+#include "activities/apps/ClockActivity.h"
+#include "activities/apps/DiceActivity.h"
+#include "activities/apps/SudokuActivity.h"
+#include "activities/apps/WeatherActivity.h"
 #include "activities/reader/EpubReaderMenuActivity.h"
 #include "activities/reader/ReaderOptionsActivity.h"
 #include "components/UITheme.h"
@@ -27,6 +32,14 @@ namespace {
 enum class SmokeStep : uint8_t {
   Start,
   Home,
+  Apps,
+  Weather,
+  Sudoku,
+  Chess,
+  Dice,
+  Clock,
+  ClockRotateRelease,
+  ClockRotated,
   FileBrowser,
   RecentBooks,
   Settings,
@@ -146,6 +159,46 @@ class SimulatorSmokeTest {
         break;
 
       case SmokeStep::Home:
+        activityManager.goToApps();
+        queueStep("Apps", SmokeStep::Apps);
+        break;
+
+      case SmokeStep::Apps:
+        activityManager.replaceActivity(std::make_unique<WeatherActivity>(renderer, mappedInputManager));
+        queueStep("Weather", SmokeStep::Weather);
+        break;
+
+      case SmokeStep::Weather:
+        activityManager.replaceActivity(std::make_unique<SudokuActivity>(renderer, mappedInputManager));
+        queueStep("Sudoku", SmokeStep::Sudoku);
+        break;
+
+      case SmokeStep::Sudoku:
+        activityManager.replaceActivity(std::make_unique<ChessActivity>(renderer, mappedInputManager));
+        queueStep("Chess", SmokeStep::Chess);
+        break;
+
+      case SmokeStep::Chess:
+        activityManager.replaceActivity(std::make_unique<DiceActivity>(renderer, mappedInputManager));
+        queueStep("Dice and 8-Ball", SmokeStep::Dice);
+        break;
+
+      case SmokeStep::Dice:
+        activityManager.replaceActivity(std::make_unique<ClockActivity>(renderer, mappedInputManager));
+        queueStep("Flip Clock", SmokeStep::Clock);
+        break;
+
+      case SmokeStep::Clock:
+        mappedInputManager.simulatorInjectPress(MappedInputManager::Button::Right);
+        step = SmokeStep::ClockRotateRelease;
+        break;
+
+      case SmokeStep::ClockRotateRelease:
+        mappedInputManager.simulatorInjectRelease(MappedInputManager::Button::Right);
+        queueStep("Flip Clock after rotation", SmokeStep::ClockRotated, 4);
+        break;
+
+      case SmokeStep::ClockRotated:
         activityManager.goToFileBrowser("/books");
         queueStep("File Browser", SmokeStep::FileBrowser);
         break;
