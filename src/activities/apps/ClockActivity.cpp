@@ -50,6 +50,8 @@ void ClockActivity::onEnter() {
   originalSettingsOrientation_ = SETTINGS.orientation;
   sessionOrientation_ = SETTINGS.orientation;
   use12Hour_ = SETTINGS.clockFormat == 1;
+  lastPollMs_ = millis();
+  colonVisible_ = true;
   ReaderUtils::applyOrientation(renderer, sessionOrientation_);
   refreshTime(true);
   requestUpdate();
@@ -80,10 +82,15 @@ bool ClockActivity::readCurrentTime(uint8_t& hour, uint8_t& minute) const {
 
   time_t now = time(nullptr);
   if (now < MIN_VALID_EPOCH) return false;
+  struct tm timeInfo{};
+#ifdef SIMULATOR
+  // Match the host clock, including its configured timezone and DST rules.
+  localtime_r(&now, &timeInfo);
+#else
   const int biasedOffset = std::min<int>(SETTINGS.clockUtcOffsetQ, 104);
   now += static_cast<time_t>((biasedOffset - 48) * 15 * 60);
-  struct tm timeInfo{};
   gmtime_r(&now, &timeInfo);
+#endif
   hour = static_cast<uint8_t>(timeInfo.tm_hour);
   minute = static_cast<uint8_t>(timeInfo.tm_min);
   return true;
@@ -200,9 +207,12 @@ void ClockActivity::loop() {
     return;
   }
 
-  if (millis() - lastPollMs_ >= 1000) {
-    lastPollMs_ = millis();
+  const uint32_t nowMs = millis();
+  if (nowMs - lastPollMs_ >= 1000) {
+    lastPollMs_ = nowMs;
+    colonVisible_ = !colonVisible_;
     refreshTime(false);
+    requestUpdate();
   }
 }
 
@@ -276,10 +286,12 @@ void ClockActivity::render(RenderLock&&) {
   x += cardWidth + CARD_GAP;
   const int colonX = x + COLON_WIDTH / 2;
   const int dotSize = std::max(6, cardWidth / 11);
-  renderer.fillRoundedRect(colonX - dotSize / 2, clockY + cardHeight / 3 - dotSize / 2, dotSize, dotSize, dotSize / 2,
-                           Color::Black);
-  renderer.fillRoundedRect(colonX - dotSize / 2, clockY + cardHeight * 2 / 3 - dotSize / 2, dotSize, dotSize,
-                           dotSize / 2, Color::Black);
+  if (colonVisible_) {
+    renderer.fillRoundedRect(colonX - dotSize / 2, clockY + cardHeight / 3 - dotSize / 2, dotSize, dotSize, dotSize / 2,
+                             Color::Black);
+    renderer.fillRoundedRect(colonX - dotSize / 2, clockY + cardHeight * 2 / 3 - dotSize / 2, dotSize, dotSize,
+                             dotSize / 2, Color::Black);
+  }
   x += COLON_WIDTH + CARD_GAP;
   drawDigitCard(x, clockY, cardWidth, cardHeight, digits[2]);
   x += cardWidth + CARD_GAP;

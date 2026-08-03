@@ -51,4 +51,6 @@ Flip Clock displays hours and minutes without seconds. It uses the configured UT
 
 On X3, the clock reads and can synchronize the battery-backed RTC. X4 has no battery-backed RTC, so it may need another on-demand sync after a restart or extended sleep. Wi-Fi is turned off when the app closes if the app enabled it.
 
-Flip Clock prevents automatic sleep while it is open so it can update when the minute changes. Press **Back** when finished to return to normal sleep behavior.
+In the simulator, Flip Clock follows the computer's configured timezone and daylight-saving rules.
+
+Flip Clock prevents automatic sleep while it is open so the separator dots can blink once per second and the time can update when the minute changes. Press **Back** when finished to return to normal sleep behavior.

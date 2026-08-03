@@ -16,7 +16,7 @@
 #include "fontIds.h"
 
 namespace {
-constexpr float PI = 3.14159265358979323846f;
+constexpr float kPi = 3.14159265358979323846f;
 
 void fillCircle(const GfxRenderer& renderer, const int centerX, const int centerY, const int radius, const bool state) {
   for (int y = -radius; y <= radius; ++y) {
@@ -154,7 +154,7 @@ void DiceActivity::drawD6(const int centerX, const int centerY, const int size) 
 }
 
 void DiceActivity::drawArrow(const int centerX, const int centerY, const int size) const {
-  const float angle = arrowAngle_ * PI / 180.0f;
+  const float angle = arrowAngle_ * kPi / 180.0f;
   const int radius = size / 2;
   drawCircle(renderer, centerX, centerY, radius, true);
   const int endX = centerX + static_cast<int>(cosf(angle) * (radius - 8));
@@ -174,7 +174,7 @@ void DiceActivity::drawD20(const int centerX, const int centerY, const int size)
   int xPoints[6];
   int yPoints[6];
   for (int index = 0; index < 6; ++index) {
-    const float angle = (index * 60.0f - 90.0f) * PI / 180.0f;
+    const float angle = (index * 60.0f - 90.0f) * kPi / 180.0f;
     xPoints[index] = centerX + static_cast<int>(cosf(angle) * radius);
     yPoints[index] = centerY + static_cast<int>(sinf(angle) * radius);
   }

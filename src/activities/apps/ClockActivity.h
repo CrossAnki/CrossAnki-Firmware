@@ -27,6 +27,7 @@ class ClockActivity final : public Activity {
   uint32_t lastPollMs_ = 0;
   bool use12Hour_ = false;
   bool timeValid_ = false;
+  bool colonVisible_ = true;
   bool syncPending_ = false;
   bool networkUsed_ = false;
   SyncState syncState_ = SyncState::Ready;

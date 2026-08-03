@@ -6,6 +6,13 @@
 - An Apps launcher with Weather, Sudoku, Chess, Dice, D20, Arrow, and Magic 8-Ball.
 - An orientation-aware flip clock that displays hours and minutes in 12- or 24-hour format.
 
+### Fixed
+
+- Firmware builds no longer fail when Arduino's `PI` macro is defined.
+- Flip Clock separator dots now blink at one-second intervals.
+- Flip Clock now follows the host timezone and daylight-saving rules in the simulator.
+- Settings remains reachable after adding Apps to the Home menu.
+
 ## [v1.4.0] - 2026-07-10
 
 ### Added
