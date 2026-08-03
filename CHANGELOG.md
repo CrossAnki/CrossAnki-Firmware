@@ -10,7 +10,7 @@
 
 - Firmware builds no longer fail when Arduino's `PI` macro is defined.
 - Flip Clock separator dots now blink at one-second intervals.
-- Flip Clock now follows the host timezone and daylight-saving rules in the simulator.
+- Flip Clock now follows the host timezone and daylight-saving rules in every simulator device profile.
 - Settings remains reachable after adding Apps to the Home menu.
 
 ## [v1.4.0] - 2026-07-10

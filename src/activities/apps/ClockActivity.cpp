@@ -71,6 +71,14 @@ void ClockActivity::onExit() {
 }
 
 bool ClockActivity::readCurrentTime(uint8_t& hour, uint8_t& minute) const {
+#ifdef SIMULATOR
+  // Simulator RTC profiles expose UTC through halClock, which would bypass
+  // the host-timezone conversion below. Always use the host wall clock.
+  const time_t now = time(nullptr);
+  if (now < MIN_VALID_EPOCH) return false;
+  struct tm timeInfo{};
+  localtime_r(&now, &timeInfo);
+#else
   if (halClock.getTime(hour, minute)) {
     const int biasedOffset = std::min<int>(SETTINGS.clockUtcOffsetQ, 104);
     int localMinutes = static_cast<int>(hour) * 60 + minute + (biasedOffset - 48) * 15;
@@ -82,13 +90,9 @@ bool ClockActivity::readCurrentTime(uint8_t& hour, uint8_t& minute) const {
 
   time_t now = time(nullptr);
   if (now < MIN_VALID_EPOCH) return false;
-  struct tm timeInfo{};
-#ifdef SIMULATOR
-  // Match the host clock, including its configured timezone and DST rules.
-  localtime_r(&now, &timeInfo);
-#else
   const int biasedOffset = std::min<int>(SETTINGS.clockUtcOffsetQ, 104);
   now += static_cast<time_t>((biasedOffset - 48) * 15 * 60);
+  struct tm timeInfo{};
   gmtime_r(&now, &timeInfo);
 #endif
   hour = static_cast<uint8_t>(timeInfo.tm_hour);
