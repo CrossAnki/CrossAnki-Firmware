@@ -27,3 +27,4 @@ Keep this file focused on repo-specific gotchas that are worth reusing in future
 
 - POSIX TZ signs are inverted from ISO 8601 in `TimeStore::applyTimezone()`: `"UTC-1"` means UTC+1.
 - `LyraTheme::drawHeader()` does not call `BaseTheme::drawHeader()`, so header changes in the base theme must be duplicated in Lyra if needed.
+- Simulator builds link `HalClock` from `crosspoint-simulator`, not `lib/HalClockSim`; RTC-enabled profiles return UTC from that HAL.
